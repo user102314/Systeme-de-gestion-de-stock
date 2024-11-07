@@ -100,29 +100,41 @@ function demarrerService() {
     alert("Service démarré par " + selectedServer + "!");
 
     fetch('saveservice.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            action: 'startService',
-            startTime: serviceStartTime,
-            serverName: selectedServer
-        })
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+        action: 'startService',
+        startTime: serviceStartTime,
+        serverName: selectedServer
     })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            recipeId = data.recipeId;
-            console.log("ID de la recette:", recipeId);
-        } else {
-            alert("Erreur lors de la création du service.");
-        }
-    })
-    .catch(error => {
-        alert("Erreur: " + error);
-    });
+})
+.then(response => {
+    if (!response.ok) {
+        throw new Error('Erreur HTTP ' + response.status);
+    }
+    return response.json();
+})
+.then(data => {
+    console.log("Données reçues:", data); // Ajoutez cette ligne pour inspecter la réponse
+    if (data.success) {
+        recipeId = data.recipeId;
+        console.log("ID de la recette:", recipeId);
+        alert("Inventaire initial ajouté dans stockinitial");
+    } else {
+        console.error("Erreur de réponse du serveur:", data.message || "Erreur inconnue");
+        alert("Erreur lors de la création du service.");
+    }
+})
+.catch(error => {
+    console.error("Erreur de requête:", error);
+    alert("Erreur: " + error);
+});
+
 }
+
+
 
 function finirService() {
     if (serviceStartTime && recipeId) {

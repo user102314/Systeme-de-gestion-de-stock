@@ -1,17 +1,13 @@
 <?php
-// Database connection details
 $servername = "localhost";
 $username = "root";
-$password = ""; // Replace with your database password
-$dbname = "cafe"; // Replace with your database name
-
-// Connect to the database
+$password = ""; 
+$dbname = "cafe"; 
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Erreur de connexion : " . $conn->connect_error);
 }
 
-// Query to fetch all recipes
 $sql = "SELECT idrecetes, nomserveur, dateentree, datesortie, prixtotale FROM recetes";
 $result = $conn->query($sql);
 ?>
@@ -59,7 +55,6 @@ $result = $conn->query($sql);
     </table>
 </div>
 
-<!-- Modal Structure -->
 <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -80,7 +75,6 @@ $result = $conn->query($sql);
                         </tr>
                     </thead>
                     <tbody id="detailsBody">
-                        <!-- Recipe details will be populated here -->
                     </tbody>
                 </table>
             </div>
@@ -89,9 +83,7 @@ $result = $conn->query($sql);
 </div>
 
 <script>
-    // Function to show details in a modal
     function showDetails(id) {
-        // Fetch recipe details
         fetch('get_recipe_details.php?id=' + id)
             .then(response => response.json())
             .then(data => {
