@@ -30,6 +30,7 @@ $result = $conn->query($sql);
                 <th>Date d'Entrée</th>
                 <th>Date de Sortie</th>
                 <th>Prix Total</th>
+                
                 <th>Action</th>
             </tr>
         </thead>
@@ -40,7 +41,9 @@ $result = $conn->query($sql);
                         <td><?php echo htmlspecialchars($row['nomserveur']); ?></td>
                         <td><?php echo htmlspecialchars($row['dateentree']); ?></td>
                         <td><?php echo htmlspecialchars($row['datesortie']); ?></td>
-                        <td><?php echo number_format($row['prixtotale'], 2, ',', ' ') . " €"; ?></td>
+                        <td><?php echo number_format($row['prixtotale'], 2, ',', ' ') . " Dt"; ?></td>
+
+                        
                         <td>
                             <button class="btn btn-info" onclick="showDetails(<?php echo $row['idrecetes']; ?>)">Voir détails</button>
                         </td>
@@ -70,8 +73,11 @@ $result = $conn->query($sql);
                         <tr>
                             <th>Nom du Produit</th>
                             <th>Quantité</th>
-                            <th>Prix Unitaire</th>
                             <th>Prix Total</th>
+                            <th>StockInitial</th>
+                            <th>StockFinal</th>
+                            <th>Manque</th>
+                            <th>Stock</th>
                         </tr>
                     </thead>
                     <tbody id="detailsBody">
@@ -84,38 +90,73 @@ $result = $conn->query($sql);
 
 <script>
     function showDetails(id) {
-        fetch('get_recipe_details.php?id=' + id)
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);  // Log data for debugging
+    fetch('get_recipe_details.php?id=' + id)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);  // Log data for debugging
 
-                if (data.success) {
-                    // Populate modal with recipe details
-                    const detailsBody = document.getElementById('detailsBody');
-                    detailsBody.innerHTML = ''; // Clear previous details
+            if (data.success) {
+                const detailsBody = document.getElementById('detailsBody');
+                detailsBody.innerHTML = ''; // Clear previous details
 
-                    data.details.forEach(detail => {
-                        const row = `<tr>
-                                        <td>${detail.nomproduit}</td>
-                                        <td>${detail.quantity}</td>
-                                        <td>${parseFloat(detail.prix_unitaire).toFixed(2).replace('.', ',')} €</td>
-                                        <td>${parseFloat(detail.prix_total).toFixed(2).replace('.', ',')} €</td>
-                                     </tr>`;
-                        detailsBody.innerHTML += row;
-                    });
+                data.details.forEach(detail => {
+                    const row = `<tr>
+                                    <td>${detail.nomproduit}</td>
+                                    <td>${detail.quantity}</td>
+                                    <td>${parseFloat(detail.prix_total).toFixed(2).replace('.', ',')} دينار</td>
+                                    <td>${detail.stock_initial}</td>
+                                    <td>${detail.stock_final}</td>
+                                    <td>${detail.manque}</td>
+                                    <td>
+    <input id='${detail.nomproduit}' type="number" value='${detail.stock_initial}'>
+    <button class="btn btn-warning" onclick="updateStock('${detail.nomproduit}')">Vérifier</button>
+</td>
 
-                    // Show the modal
-                    $('#detailsModal').modal('show');
-                } else {
-                    console.error("Data retrieval error:", data.error);
-                    alert('Erreur lors de la récupération des détails.');
-                }
-            })
-            .catch(error => {
-                console.error("Fetch error:", error);
-                alert('Erreur: ' + error);
-            });
-    }
+                                 </tr>`;
+                    detailsBody.innerHTML += row;
+                });
+
+                // Show the modal
+                $('#detailsModal').modal('show');
+            } else {
+                console.error("Data retrieval error:", data.error);
+                alert('Erreur lors de la récupération des détails.');
+            }
+        })
+        .catch(error => {
+            console.error("Fetch error:", error);
+            alert('Erreur: ' + error);
+        });
+}
+function updateStock(productName) {
+    const stockValue = document.getElementById(productName).value;
+    console.log("Updating stock for:", productName, "with stock value:", stockValue);
+
+    fetch('update_stock.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            productName: productName,
+            stockValue: stockValue
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Stock mis à jour avec succès!');
+            $('#detailsModal').modal('hide');
+        } else {
+            alert('Erreur lors de la mise à jour du stock: ' + data.error);
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        alert('Erreur: ' + error);
+    });
+}
+
 </script>
 
 

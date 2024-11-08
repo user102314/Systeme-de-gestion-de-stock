@@ -12,11 +12,11 @@
         <table>
             
             <tr>
-                <td><img src="/img/1.jpg" alt="" width="200" height="200"><br><a href="stock.php" style="text-decoration: none; color: black;font-size: 1.2em;">Voir Le Stock</a></td>
-                <td><img src="/img/1.jpg" alt="" width="200" height="200"><br><a href="Seveurs.php" style="text-decoration: none; color: black;font-size: 1.2em;">Les Seveurs</a></td>
+                <td><img src="1.jpg" alt="" width="200" height="200"><br><a href="stock.php" style="text-decoration: none; color: black;font-size: 1.2em;">Voir Le Stock</a></td>
+                <td><img src="1.jpg" alt="" width="200" height="200"><br><a href="Seveurs.php" style="text-decoration: none; color: black;font-size: 1.2em;">Les Seveurs</a></td>
             </tr>
             <tr>
-                <td><img src="/img/1.jpg" alt="" width="200" height="200"><br><a href="Recetes.php" style="text-decoration: none; color: black;font-size: 1.2em;">Les Recetes</a></td>
+                <td><img src="1.jpg" alt="" width="200" height="200"><br><a href="Recetes.php" style="text-decoration: none; color: black;font-size: 1.2em;">Les Recetes</a></td>
             </tr>
         </table>
     </div>

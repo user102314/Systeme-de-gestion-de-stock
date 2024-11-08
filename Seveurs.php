@@ -49,8 +49,15 @@ $result = $conn->query($sql);
 </head>
 <body>
 <div class="container mt-5">        
-    <button class="btn btn-success mb-3" onclick="openAddModal()">Ajouter un serveur</button>
-
+    <div style="width:99%;text-align:center;"><button class="btn btn-success mb-3" onclick="openAddModal()">Ajouter un serveur</button></div>
+    <script>
+        function openAddModal() {
+            $('#addModal').modal('show');
+        }
+        function closeModal() {
+            $('#addModal').modal('hide');
+        }
+    </script>
     <h2 class="text-center">Liste des Serveurs</h2>
     <table class="table table-bordered table-striped mt-4">
         <thead class="thead-dark">
@@ -85,47 +92,45 @@ $result = $conn->query($sql);
     </table>
 </div>
 
-    <!-- Modale pour ajouter un serveur -->
-    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addModalLabel">Ajouter un serveur</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeModal()">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <label for="nomserveur">Nom du serveur</label>
-                    <input type="text" class="form-control" id="nomserveur" required>
-                    <label for="numtlf">numero de tlf</label>
-                    <input type="number" class="form-control" id="numtlf" required>
-                    <button type="button" class="btn btn-success mt-3" onclick="addserveur()">Ajouter</button>
-                </div>
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addModalLabel">Ajouter un serveur</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label for="nomserveur">Nom du serveur</label>
+                <input type="text" class="form-control" id="nomserveur" required>
+                <label for="numtlf">Numéro de téléphone</label>
+                <input type="number" class="form-control" id="numtlf" required>
+                <button type="button" class="btn btn-success mt-3" onclick="addserveur()">Ajouter</button>
             </div>
         </div>
     </div>
+</div>
+
+
     <script>
         async function addserveur() {
-            const name = document.getElementById('addProductName').value;
-            const quantity = document.getElementById('addProductQuantity').value;
+        const nomserveur = document.getElementById('nomserveur').value;
+        const numtlf = document.getElementById('numtlf').value;
 
-            const response = await fetch('add_serveur.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: `nomserveur=${encodeURIComponent(nomserveur)}&numtlf=${numtlf}`
-            });
+        const response = await fetch('add_serveur.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `nomserveur=${encodeURIComponent(nomserveur)}&numtlf=${encodeURIComponent(numtlf)}`
+        });
 
-            if (response.ok) {
-                location.reload();
-            } else {
-                alert('Erreur lors de l\'ajout du produit');
-            }
+        if (response.ok) {
+            location.reload(); 
+        } else {
+            alert('Erreur lors de l\'ajout du serveur');
         }
-        function closeModal() {
-            $('#editModal').modal('hide');
-            $('#addModal').modal('hide');
-        }
+        }   
+
     </script>
 <?php
 $conn->close();

@@ -103,6 +103,24 @@ if (isset($data['recipeId'])) {
                 ]);
                 exit;
             }
+            // partie ajouteé : verifieé cette partie  je veux  que  a  chaque produit tu va insereé dans le stock finale tu vas mettre  a jour dans le  tableau stock 
+            // partie ajoutée : vérifier cette partie 
+            // À chaque produit inséré dans stockfinal, mettre à jour la quantité dans la table stock
+            $sqlUpdateStock = "UPDATE stock SET quantityprod = ? WHERE nomprod = ?";
+            $stmtUpdateStock = $conn->prepare($sqlUpdateStock);
+            $stmtUpdateStock->bind_param("is", $quantiteFinale, $nomProduitStock);
+
+            if (!$stmtUpdateStock->execute()) {
+                echo json_encode([
+                    'success' => false,
+                    'error' => 'Failed to update stock: ' . $stmtUpdateStock->error,
+                    'sql' => $sqlUpdateStock
+                ]);
+                exit;
+            }
+
+            // fin de la  partie ajouteé 
+
         }
         echo json_encode(['success' => true, 'message' => 'Service terminé et stockfinal mis à jour avec succès.']);
     } else {
