@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Café</title>
+    <style>
+        /* Styles de base */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Conteneur pour l'image */
+        .menu-container {
+            width: 100%;
+            height: 100vh; /* Utiliser toute la hauteur de la fenêtre */
+            display: flex;
+            justify-content: center; /* Centrer horizontalement */
+            align-items: center; /* Centrer verticalement */
+            background-color: #fff;
+        }
+
+        .menu-image {
+            max-width: 90%; /* Limite la largeur de l'image à 90% de la largeur du conteneur */
+            max-height: 90%; /* Limite la hauteur de l'image à 90% de la hauteur du conteneur */
+            object-fit: contain; /* L'image reste proportionnelle et ne déforme pas */
+            border: 2px solid #ddd; /* Ajouter une bordure autour de l'image */
+            border-radius: 10px; /* Arrondir les coins de l'image */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Conteneur de l'image -->
+    <div class="menu-container">
+        <img src="img/menu.png" alt="Menu Café" class="menu-image">
+    </div>
+
+</body>
+</html>
