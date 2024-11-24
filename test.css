@@ -1,0 +1,157 @@
+:root {
+    --text: #FEEBF7;
+    --background: rgba(25, 8, 19, 1);
+    --base-speed: 40s;
+    --overlay: rgba(25, 8, 19, 0.9);
+    --color-grid: #ff47a0;
+    --color-grid-glow: #fa7cb9;
+    --line-width: 0.0625rem;
+    --height: 15.625rem;
+    --perspective: 17.625rem;
+  }
+  
+  .content {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  
+  h2 {
+    font-size: 7rem;
+    font-weight: 900;
+    opacity: 0.3;
+  }
+  
+  .top {
+    background: inherit;
+    perspective: var(--perspective);
+    flex: 0 0 var(--height);
+    position: relative;
+  }
+  .top:before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, var(--color-grid) var(--line-width), transparent var(--line-width)), linear-gradient(to bottom, var(--color-grid) var(--line-width), transparent var(--line-width));
+    background-size: 2rem 125rem, 125rem 2rem;
+    transform: rotateX(-53deg) scale(1.8) translateZ(43px);
+    -webkit-animation: grid-top calc(var(--base-speed) * 1) linear infinite;
+            animation: grid-top calc(var(--base-speed) * 1) linear infinite;
+    border-bottom: 1px solid var(--color-grid);
+    filter: drop-shadow(0 0 2px var(--color-grid-glow));
+  }
+  
+  .top-overlay {
+    perspective: var(--perspective);
+    flex: 0 0 var(--height);
+    position: absolute;
+    z-index: 10000;
+    right: 0;
+    left: 0;
+    top: 0;
+    height: var(--height);
+    background: radial-gradient(ellipse at center, transparent 50%, var(--overlay) 70%);
+  }
+  
+  .bottom-overlay {
+    perspective: var(--perspective);
+    flex: 0 0 var(--height);
+    position: absolute;
+    z-index: 10000;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    height: var(--height);
+    background: radial-gradient(ellipse at center, transparent 50%, var(--overlay) 70%);
+  }
+  
+  .bottom {
+    background: inherit;
+    perspective: var(--perspective);
+    flex: 0 0 var(--height);
+    position: relative;
+  }
+  .bottom:before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, var(--color-grid) var(--line-width), transparent var(--line-width)), linear-gradient(to bottom, var(--color-grid) var(--line-width), transparent var(--line-width));
+    background-size: 2rem 125rem, 125rem 2rem;
+    transform: rotateX(53deg) scale(1.8) translateZ(43px);
+    -webkit-animation: grid-bottom calc(var(--base-speed) * 1) linear infinite;
+            animation: grid-bottom calc(var(--base-speed) * 1) linear infinite;
+    -webkit-animation-fill-mode: backwards;
+            animation-fill-mode: backwards;
+    -webkit-backface-visibility: hidden;
+    -webkit-transform-style: preserve-3d;
+    border-top: 1px solid var(--color-grid);
+    filter: drop-shadow(0 0 2px var(--color-grid-glow));
+  }
+  
+  @-webkit-keyframes grid-bottom {
+    from {
+      background-position-y: -30rem;
+    }
+    to {
+      background-position-y: 0%;
+    }
+  }
+  
+  @keyframes grid-bottom {
+    from {
+      background-position-y: -30rem;
+    }
+    to {
+      background-position-y: 0%;
+    }
+  }
+  @-webkit-keyframes grid-top {
+    from {
+      background-position-y: 30rem;
+    }
+    to {
+      background-position-y: 0%;
+    }
+  }
+  @keyframes grid-top {
+    from {
+      background-position-y: 30rem;
+    }
+    to {
+      background-position-y: 0%;
+    }
+  }
+  .scene {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  .scene:after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: url(https://assets.codepen.io/907471/noise.svg);
+    opacity: 0.7;
+    mix-blend-mode: overlay;
+    filter: invert(1);
+    z-index: 20000;
+  }
+  
+  section {
+    background-color: var(--background);
+    color: var(--text);
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+  }
+  a{
+    text-decoration: none;
+    color: white;
+  }
+
+  
