@@ -1,7 +1,0 @@
-a la fin de service  dans  cette  fonction je  veux  ajoute  quelque  tache  :
-je  veux  remplire  le  tableau stockfinal par des  donneé  comme suit : 
-tu va parcurire  le  tablaux stock initial puis tu vas maitre  c'est condition si nom produit = "bonn" alors tu va faire une variable SommeStockResteBonn = quantite(la quantite dans le tableau )  - (Les quantite des  produit suivant) ["Exprese" + "capussin" + "direct"]*9
-alors tu va insere dans le tableau stock finale ( nomproduitstock : bonn , quantite : SommeStockResteBonn , idrecetes)
-si le nomproduitstock = "coca" alors tu va calcule la difirence entre quantite coca et la quantité de produit qui s'appele "gazouz" ( ca veut dire tu vas extracteé ou recherche la quantiteé de produit gazouz dans la page )
-et enfin tu vas tu va insere  dans stockfinal le nom produit et  la  quantiteé finale calculeé et idrecetes biensur 
-Remarque : si le nomproduitstock je le ne fait pas une condition tu vas faire else et insere la meme ligne de  ce produit dans stockfinale  

@@ -22,7 +22,7 @@ function getTransformedProductName($productName) {
         'Gazouz' => 'Coca',
         'Paket MontiCarlo' => 'Paket MontiCarlo',
         'Mars Legere' => 'Mars Legere',
-        'Paket Mirit / Malboro' => 'Paket Mirit/Malboro'
+        'Paket Mirit / Malboro' => 'Paket Mirit / Malboro'
     ];
     return $productMap[$productName] ?? $productName;
 }

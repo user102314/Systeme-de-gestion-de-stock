@@ -1,30 +1,42 @@
 <?php
-// Étape 1 : Connexion à la base de données
-$servername = "localhost"; // Assurez-vous que le serveur est correctement défini
-$username = "root"; // Remplacez par votre nom d'utilisateur
-$password = ""; // Remplacez par votre mot de passe de base de données
-$dbname = "cafe"; // Remplacez par le nom de votre base de données
-
+$servername = "localhost";
+$username = "root";
+$password = ""; 
+$dbname = "cafe"; 
 $conn = new mysqli($servername, $username, $password, $dbname);
+
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
+
 $error = '';
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'];
     $password = $_POST['password'];
-    
-    // Vérification uniquement pour l'admin
-    if ($name === "serveur" && $password === "serveur") {
-        header("Location: serveur.php");
+    $stmt = $conn->prepare("SELECT * FROM serveur WHERE nom = ? AND motdepasse = ?");
+    $stmt->bind_param("ss", $name, $password); 
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $insertStmt = $conn->prepare("INSERT INTO lastlogin (nom) VALUES (?)");
+        $insertStmt->bind_param("s", $name); 
+        $insertStmt->execute();
+        $insertStmt->close();
+
+        header("Location: serveur.php"); 
         exit();
     } else {
         $error = "Nom d'utilisateur ou mot de passe incorrect.";
     }
+
+    $stmt->close();
 }
 
-$conn->close();
+$conn->close(); 
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -32,11 +44,12 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
 </head>
 <body>
     <div class="container d-flex align-items-center justify-content-center min-vh-100">
         <div class="loginn" style="width: 35%; text-align: center;">
-            <h2>  تسجيل الدخول كموظف</h2>
+            <h2>تسجيل الدخول كموظف</h2>
             <?php if ($error): ?>
                 <div class="alert alert-danger"><?php echo htmlspecialchars($error); ?></div>
             <?php endif; ?>

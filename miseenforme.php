@@ -44,7 +44,7 @@ if ($file) {
 
         // Construire le ticket avec les informations formatées
         $ticketData = "____ BIENVENU ___\n";
-        $ticketData .= "***** Cafe Zone *****\n";
+        $ticketData .= "*** Cafe Zone ***\n";
         $ticketData .= "Date :\n $currentDate\n\n";
         $ticketData .="Le(s) Produit : ";
 
